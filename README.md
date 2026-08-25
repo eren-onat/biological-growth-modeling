@@ -1,42 +1,64 @@
 # Dungeness Crab Cohort Biomass Modeling
 
-This project uses mathematical modeling to compare candidate models for **Dungeness crab cohort biomass** across 52 yearly time steps. The goal was to determine which model best represented the observed biological growth and decline, evaluate its performance, and use the selected model to examine longer-term behavior.
+A mathematical modeling project comparing five discrete population-growth models against a **55-observation Dungeness crab cohort biomass dataset**. The analysis emphasizes model fitting, quantitative model selection, validation, and forecasting rather than assuming a single model in advance.
 
 Developed as part of **MATH 440: Mathematical Modeling** at Christopher Newport University.
 
+![Candidate model comparison](figures/model_comparison.png)
+
 ## Project Overview
 
-The analysis follows a model-selection workflow rather than relying on a single assumed model. Candidate models are fit to the observed biomass data and compared quantitatively before the strongest model is evaluated further.
+The dataset records cohort biomass from time 0 through 54. I fit and compare five candidate models:
 
-The project includes:
+1. Discrete Logistic
+2. Smith-Slatkin
+3. Beverton-Holt
+4. Ricker
+5. Theta-Ricker
 
-- fitting multiple candidate mathematical models to biological data
-- parameter estimation and regression modeling
-- model comparison using **AIC** and **AICc**
-- residual analysis
-- holdout validation
-- forecasting with the selected model
-- interpretation of growth, decline, and long-term cohort behavior
+Parameters are estimated with nonlinear curve fitting. Candidate models are then compared using residual error and **AICc**, followed by additional validation of the top model.
 
-## Methods
+## Analysis Workflow
 
-The workflow emphasizes both model fit and validation. AIC/AICc are used to compare candidate models while accounting for model complexity, followed by residual analysis and a holdout test to evaluate how well the selected model generalizes beyond the data used for fitting.
+- Load and inspect the biomass time series
+- Fit five candidate population models
+- Compare model behavior visually
+- Calculate residuals and corrected Akaike Information Criterion (AICc)
+- Rank models using AICc and delta-AICc
+- Evaluate the selected model on a holdout portion of the data
+- Use parameter uncertainty and bootstrap sampling in the forecasting analysis
+- Interpret the resulting growth and long-term biomass behavior
+
+## Validation and Forecasting
+
+![Holdout validation](figures/holdout_validation.png)
+
+![Forecast](figures/forecast.png)
+
+The project separates model selection from validation so that the final model is evaluated beyond the observations used during fitting. Forecasting is then used to explore how the modeled cohort behaves beyond the observed time range.
 
 ## Repository Contents
 
-- `dungeness_crab_biomass_modeling.ipynb` — complete analysis and modeling workflow
-- `data/DS14.csv` — dataset used in the project
-- `figures/` — model comparison, residual, validation, and forecast figures
+- `dungeness_crab_biomass_modeling.ipynb` — complete modeling workflow, cleaned of bulky embedded outputs for easier review
+- `data/DS14.csv` — project dataset
+- `figures/` — raw data, candidate-model comparison, residual, validation, and forecast figures
+- `requirements.txt` — Python dependencies
 
-## Skills Demonstrated
+## Tools and Methods
 
-- Mathematical modeling of a biological system
-- Parameter estimation and model selection
-- Quantitative model validation
-- Scientific computing in Python
-- Data visualization and interpretation
-- Translating a real-world biological problem into a testable mathematical framework
+**Python · NumPy · Pandas · SciPy · Matplotlib**
 
-## Context
+Methods demonstrated include nonlinear parameter estimation, discrete dynamical modeling, residual analysis, AIC/AICc model comparison, holdout validation, uncertainty analysis, and scientific visualization.
 
-This project is part of my broader interest in using applied mathematics and computation to understand real physical and biological systems. I am particularly interested in extending these skills toward biomedical engineering, biomechanics, and physiological modeling.
+## Running the Project
+
+```bash
+pip install -r requirements.txt
+jupyter notebook dungeness_crab_biomass_modeling.ipynb
+```
+
+The notebook reads the included dataset from `data/DS14.csv`.
+
+## Why I Built It
+
+This project strengthened my interest in using applied mathematics and computation to understand biological systems. The same workflow — translating a real system into candidate mathematical models, testing those models against data, and evaluating where they succeed or fail — is a process I hope to carry into graduate work in biomedical engineering and physiological modeling.
