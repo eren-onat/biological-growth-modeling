@@ -1,64 +1,49 @@
-# Dungeness Crab Cohort Biomass Modeling
+# Dungeness Crab Biomass Modeling
 
-A mathematical modeling project comparing five discrete population-growth models against a **55-observation Dungeness crab cohort biomass dataset**. The analysis emphasizes model fitting, quantitative model selection, validation, and forecasting rather than assuming a single model in advance.
+This was my final project for **MATH 440: Mathematical Modeling** at Christopher Newport University. I used a data set with 55 yearly observations of Dungeness crab cohort biomass and compared five discrete population models.
 
-Developed as part of **MATH 440: Mathematical Modeling** at Christopher Newport University.
+My goal was to see which model fit the data best, not to choose one model ahead of time and force it to work.
 
-![Candidate model comparison](figures/model_comparison.png)
+![Comparison of the five models](figures/model_comparison.png)
 
-## Project Overview
+## Models
 
-The dataset records cohort biomass from time 0 through 54. I fit and compare five candidate models:
+I fit the following models:
 
-1. Discrete Logistic
+1. Discrete logistic
 2. Smith-Slatkin
 3. Beverton-Holt
 4. Ricker
 5. Theta-Ricker
 
-Parameters are estimated with nonlinear curve fitting. Candidate models are then compared using residual error and **AICc**, followed by additional validation of the top model.
+The parameters were estimated with `scipy.optimize.curve_fit`. I compared the fitted models using residuals, RSS, and corrected Akaike Information Criterion (AICc).
 
-## Analysis Workflow
+## Results
 
-- Load and inspect the biomass time series
-- Fit five candidate population models
-- Compare model behavior visually
-- Calculate residuals and corrected Akaike Information Criterion (AICc)
-- Rank models using AICc and delta-AICc
-- Evaluate the selected model on a holdout portion of the data
-- Use parameter uncertainty and bootstrap sampling in the forecasting analysis
-- Interpret the resulting growth and long-term biomass behavior
+The Beverton-Holt model had the lowest AICc when the models were fit to the full data set. I then used it for a 12-step forecast with a bootstrap confidence interval.
 
-## Validation and Forecasting
+I also included an 80/20 holdout comparison to see how the models behaved on the last part of the time series after fitting on the first part.
 
-![Holdout validation](figures/holdout_validation.png)
+![Holdout comparison](figures/holdout_validation.png)
 
 ![Forecast](figures/forecast.png)
 
-The project separates model selection from validation so that the final model is evaluated beyond the observations used during fitting. Forecasting is then used to explore how the modeled cohort behaves beyond the observed time range.
+## Files
 
-## Repository Contents
+- `dungeness_crab_biomass_modeling.ipynb`: the full analysis
+- `data/DS14.csv`: the biomass data
+- `figures/`: plots used in the analysis
+- `requirements.txt`: Python packages needed to run the notebook
 
-- `dungeness_crab_biomass_modeling.ipynb` — complete modeling workflow, cleaned of bulky embedded outputs for easier review
-- `data/DS14.csv` — project dataset
-- `figures/` — raw data, candidate-model comparison, residual, validation, and forecast figures
-- `requirements.txt` — Python dependencies
+## Tools
 
-## Tools and Methods
+Python, NumPy, Pandas, SciPy, and Matplotlib
 
-**Python · NumPy · Pandas · SciPy · Matplotlib**
-
-Methods demonstrated include nonlinear parameter estimation, discrete dynamical modeling, residual analysis, AIC/AICc model comparison, holdout validation, uncertainty analysis, and scientific visualization.
-
-## Running the Project
+## Run the notebook
 
 ```bash
 pip install -r requirements.txt
 jupyter notebook dungeness_crab_biomass_modeling.ipynb
 ```
 
-The notebook reads the included dataset from `data/DS14.csv`.
-
-## Why I Built It
-
-This project strengthened my interest in using applied mathematics and computation to understand biological systems. The same workflow — translating a real system into candidate mathematical models, testing those models against data, and evaluating where they succeed or fail — is a process I hope to carry into graduate work in biomedical engineering and physiological modeling.
+The notebook reads the data from `data/DS14.csv`.
