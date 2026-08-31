@@ -2,7 +2,7 @@
 
 This was my final project for **MATH 440: Mathematical Modeling** at Christopher Newport University. I used a data set with 55 yearly observations of Dungeness crab cohort biomass and compared five discrete population models.
 
-My goal was to see which model fit the data best, not to choose one model ahead of time and force it to work.
+My goal was to see which model fit the data best.
 
 ![Comparison of the five models](figures/model_comparison.png)
 
